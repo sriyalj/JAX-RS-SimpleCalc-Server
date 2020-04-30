@@ -1,27 +1,12 @@
 package Controller;
 
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-/*
-import javax.servlet.http.HttpServletResponse;
-
-import Model.Model;
-
-import java.io.IOException;
-import java.util.*;
-
-
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
-import com.fasterxml.jackson.databind.node.ObjectNode;
-*/
 
 public class Controller {
 	
-	/*
+	
 	private String firstNum;
 	private String scndNum;
 	private String operation;
@@ -159,6 +144,6 @@ public class Controller {
 		
 		
 	}
-	*/
+	
 
 }
