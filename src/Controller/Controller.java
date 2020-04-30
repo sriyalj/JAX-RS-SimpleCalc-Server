@@ -1,7 +1,11 @@
 package Controller;
 
+import java.util.Base64;
+
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+
+import Model.Model;
 
 
 public class Controller {
@@ -11,7 +15,9 @@ public class Controller {
 	private String scndNum;
 	private String operation;
 	private String JSONString;
-	private ArrayList <String> res;
+	
+	private String response;
+	private Response serverResponse;
 	
 	public Controller (String firstNum, String scndNum, String operation) {
 		this.firstNum =  firstNum;
@@ -23,7 +29,7 @@ public class Controller {
 		this.JSONString = JSONString;
 	}
 	
-	public ArrayList <String> doGet () {
+	public Response doGet () {
 		
 		byte[] decodedBytes = Base64.getDecoder().decode(operation);
 		String decodedOperation = new String(decodedBytes);
@@ -35,35 +41,29 @@ public class Controller {
         			Model <Long> longModel = new Model <> (Long.valueOf(Long.parseLong(firstNum)),Long.valueOf(Long.parseLong(scndNum)));        		
         			Long longAns = null; 
         			Double divLongAns = null;
-        			res = new ArrayList <> ();
         			
         			switch (decodedOperation) {
         				case "+" : longAns = longModel.addNumbers();         						   
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        						   res.add("Addition of " + firstNum + " & " + scndNum + " is : " + longAns.toString());        						   
+        						   response = "Addition of " + firstNum + " & " + scndNum + " is : " + longAns.toString();        						   
         						   break;
         				
         				case "-" : longAns = longModel.substractNumbers(); 
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        						   res.add("Substracting " + scndNum + " From " + firstNum + " is : " + longAns.toString());						 		   
+        						   response = "Substracting " + scndNum + " From " + firstNum + " is : " + longAns.toString();
 						 		   break;
 						 
         				case "*" : longAns = longModel.multiplyNumbers();
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        						   res.add("Multiplication of " + firstNum + " & " + scndNum + " is : " + longAns.toString());
+        						   response = "Multiplication of " + firstNum + " & " + scndNum + " is : " + longAns.toString();
 		 				 		   break;
 		 				 				 
         				case "/" : divLongAns = longModel.<Double>divideNumbers();
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        						   res.add("Division of " + firstNum + " By " + scndNum + " is : " + divLongAns.toString());
+        						   response = "Division of " + firstNum + " By " + scndNum + " is : " + divLongAns.toString();
 		 				 		   break;
 		 				 
         				case "%" : longAns = longModel.modulusNumbers(); 
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        						   res.add("Modulus of " + firstNum + " by " + scndNum + " is : " + longAns.toString());
+        						   response = "Modulus of " + firstNum + " by " + scndNum + " is : " + longAns.toString();
 		 				 		   break;
         			  }     
-        			  return res;
+        			  return Response.status(Status.OK.getStatusCode()).entity(response).build();;
         		 }
         		 catch (NumberFormatException e){
         			Model <Double> doubleModel = new Model <> (Double.valueOf(Double.parseDouble(firstNum)),Double.valueOf(Double.parseDouble(scndNum)));
