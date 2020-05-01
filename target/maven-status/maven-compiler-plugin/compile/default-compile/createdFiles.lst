@@ -1,6 +1,6 @@
 View/SimpleException.class
 View/WrongInputFormatException.class
 Controller/Controller.class
-Exceptions/WrongOperationException.class
+Model/WrongOperationException.class
 View/View.class
 Model/Model.class

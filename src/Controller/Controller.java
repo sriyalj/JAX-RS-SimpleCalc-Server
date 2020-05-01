@@ -5,8 +5,9 @@ import java.util.Base64;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
-import Exceptions.WrongInputFormatException;
-import Exceptions.WrongOperationException;
+import Errors.SimpleException;
+import Errors.WrongInputFormatException;
+import Errors.WrongOperationException;
 import Model.Model;
 
 
@@ -30,7 +31,7 @@ public class Controller {
 		this.JSONString = JSONString;
 	}
 	
-	public Response doGet () throws WrongInputFormatException, WrongOperationException {
+	public Response doGet () throws WrongInputFormatException, WrongOperationException, SimpleException {
 		
 		byte[] decodedBytes = Base64.getDecoder().decode(operation);
 		String decodedOperation = new String(decodedBytes);
@@ -100,9 +101,10 @@ public class Controller {
            	}
         	
         }
-        else {
-        	
-    		throw new WrongOperationException(Status.NOT_ACCEPTABLE.getStatusCode(),"Wrong Operation Requested. System Only Supports +, -, *, /, %");
+        else {        	
+    		//throw new WrongOperationException("Wrong Operation Requested. System Only Supports +, -, *, /, %");
+    		//throw new WrongOperationException("This is a Stupid Exception 123. System Only Supports +, -, *, /, %");
+        	throw new SimpleException("This is a Stupid Exception");
         }     
 	}
 	/*

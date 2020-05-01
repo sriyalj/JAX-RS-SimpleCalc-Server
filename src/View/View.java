@@ -11,8 +11,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import Controller.Controller;
-import Exceptions.WrongInputFormatException;
-import Exceptions.WrongOperationException;
+import Errors.SimpleException;
+import Errors.WrongInputFormatException;
+import Errors.WrongOperationException;
 
 @Path("/view")
 public class View {
@@ -24,10 +25,10 @@ public class View {
 			                          @PathParam("secondNumber") String scndNum, 
 			                          @PathParam("operation") String operation) throws  SimpleException, WrongInputFormatException, WrongOperationException {
 		
-		//Controller control = new Controller (fstNum, scndNum, operation);
-		//return control.doGet();
+		Controller control = new Controller (fstNum, scndNum, operation);
+		return control.doGet();
 		
-		
+		/*
 		byte[] decodedBytes = Base64.getDecoder().decode(operation);
 		operation = new String(decodedBytes);
 		
@@ -35,11 +36,12 @@ public class View {
 		
 		
 		if (operation.equals("*")){
-			//throw new SimpleException("Simple Exception");
-			throw new WrongInputFormatException("Wrong Input Exception");
+			//throw new SimpleException("This is a Stupid Exception");
+			//throw new SimpleException ();
+			throw new WrongInputFormatException("This Is BCZ of Wrong Input Exception");
 		}
 		return Response.status(Status.OK.getStatusCode()).entity(operation).build();
-		
+		*/
 		
 	}
 	
