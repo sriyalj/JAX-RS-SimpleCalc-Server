@@ -6,8 +6,9 @@ import javax.ws.rs.ext.Provider;
 
 
 @Provider
-public class SimpleException extends Exception implements
-ExceptionMapper<SimpleException>  {
+public class SimpleException extends Exception implements ExceptionMapper<SimpleException>  {
+	
+	int statusCode;
 
 	public SimpleException() {
         super("This is a simple Exception");
@@ -16,11 +17,16 @@ ExceptionMapper<SimpleException>  {
     public SimpleException(String string) {
         super(string);
     }
+    
+    public SimpleException(int statusCode, String description) {		
+        super(description);
+        this.statusCode = statusCode;        
+    }
  
     @Override
     public Response toResponse(SimpleException exception) 
     {
-        return Response.status(404).entity(exception.getMessage())
+        return Response.status(406).entity(exception.getMessage())
                                     .type("text/plain").build();
     }
 }

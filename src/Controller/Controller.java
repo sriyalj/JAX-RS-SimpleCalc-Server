@@ -5,11 +5,12 @@ import java.util.Base64;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import Exceptions.WrongInputFormatException;
+import Exceptions.WrongOperationException;
 import Model.Model;
 
 
-public class Controller {
-	
+public class Controller {	
 	
 	private String firstNum;
 	private String scndNum;
@@ -29,10 +30,11 @@ public class Controller {
 		this.JSONString = JSONString;
 	}
 	
-	public Response doGet () {
+	public Response doGet () throws WrongInputFormatException, WrongOperationException {
 		
 		byte[] decodedBytes = Base64.getDecoder().decode(operation);
 		String decodedOperation = new String(decodedBytes);
+		//String decodedOperation = operation;
 		
 		if (decodedOperation.equals("+") || decodedOperation.equals("-") || decodedOperation.equals("*") || decodedOperation.equals("/") || decodedOperation.equals("%")) {
         	
@@ -63,60 +65,47 @@ public class Controller {
         						   response = "Modulus of " + firstNum + " by " + scndNum + " is : " + longAns.toString();
 		 				 		   break;
         			  }     
-        			  return Response.status(Status.OK.getStatusCode()).entity(response).build();;
+        			  return Response.status(Status.OK.getStatusCode()).entity(response).build();
         		 }
         		 catch (NumberFormatException e){
         			Model <Double> doubleModel = new Model <> (Double.valueOf(Double.parseDouble(firstNum)),Double.valueOf(Double.parseDouble(scndNum)));
         			Double doubleAns = null;
-        			res = new ArrayList <> ();
         			
         			switch (decodedOperation) {
         				case "+" : doubleAns = doubleModel.addNumbers();
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        						   res.add("Addition of " + firstNum + " & " + scndNum + " is : " + doubleAns.toString());
+        						   response = "Addition of " + firstNum + " & " + scndNum + " is : " + doubleAns.toString();
         						   break;
         				
         				case "-" : doubleAns = doubleModel.substractNumbers(); 
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        						   res.add("Substracting  " + scndNum + " From " + firstNum + " is : " + doubleAns.toString());
+        						   response = "Substracting " + scndNum + " From " + firstNum + " is : " + doubleAns.toString();
 						 		   break;
 						 
         				case "*" : doubleAns = doubleModel.multiplyNumbers();
-        				           res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        				           res.add("Multiplication of " + firstNum + " & " + scndNum + " is : " + doubleAns.toString());
-        				           
+        						   response = "Multiplication of " + firstNum + " & " + scndNum + " is : " + doubleAns.toString();        				           
 		 				 		   break;
 		 				 				 
         				case "/" : doubleAns = doubleModel.<Double>divideNumbers();
-        					       res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));
-        					       res.add("Division of " + firstNum + " By " + scndNum + " is : " + doubleAns.toString());
+        						   response = "Division of " + firstNum + " By " + scndNum + " is : " + doubleAns.toString();
 		 				 		   break;
 		 				 
         				case "%" : doubleAns = doubleModel.modulusNumbers();
-        						   res.add("Server Response Code " + Integer.toString(HttpServletResponse.SC_OK));				   
-        						   res.add("Modulus of " + firstNum + " by " + scndNum + " is : " + doubleAns.toString());
+        						   response = "Modulus of " + firstNum + " by " + scndNum + " is : " + doubleAns.toString();
 		 				 		   break;
         		    }
-        			return res;
+        			return Response.status(Status.OK.getStatusCode()).entity(response).build();
         	   }
         	}
         	catch (Exception e){
-        		//System.out.println (e);
-        		res = new ArrayList <> ();
-        		res.add("Srever Response Code " + Integer.toString(HttpServletResponse.SC_BAD_REQUEST));
-        		res.add("Wrong Formatting of Input Numbers. The System Only Supports Integers and/or Doubles" );        		
-        		return res;
-        	}
+        		throw new WrongInputFormatException("Wrong Formatting of Input Numbers. The System Only Supports Integers and/or Doubles");
+           	}
         	
         }
         else {
-        	res = new ArrayList <> ();
-        	res.add("Srever Response Code " + Integer.toString(HttpServletResponse.SC_BAD_REQUEST));
-        	res.add("Wrong Operation Requested. System Only Supports +, -, *, /, %" );
-        	return res;
+        	
+    		throw new WrongOperationException(Status.NOT_ACCEPTABLE.getStatusCode(),"Wrong Operation Requested. System Only Supports +, -, *, /, %");
         }     
 	}
-	
+	/*
 	void parseJson () throws IOException{
 		ObjectMapper objectMapper = new ObjectMapper();
 		JsonNode rootNode = objectMapper.readTree(JSONString.getBytes());
@@ -144,6 +133,6 @@ public class Controller {
 		
 		
 	}
-	
+	*/
 
 }

@@ -1,5 +1,7 @@
 package View;
 
+import java.util.Base64;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -9,6 +11,8 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import Controller.Controller;
+import Exceptions.WrongInputFormatException;
+import Exceptions.WrongOperationException;
 
 @Path("/view")
 public class View {
@@ -18,16 +22,25 @@ public class View {
 	@Path("/{firstNumber}/{secondNumber}/{operation}")
 	public Response doGetPlainTextMsg(@PathParam("firstNumber") String fstNum, 
 			                          @PathParam("secondNumber") String scndNum, 
-			                          @PathParam("operation") String operation) throws SimpleException {
-		String output = fstNum + " " + scndNum + " " + operation;
-		System.out.println (fstNum);
-		System.out.println (scndNum);
+			                          @PathParam("operation") String operation) throws  SimpleException, WrongInputFormatException, WrongOperationException {
+		
+		//Controller control = new Controller (fstNum, scndNum, operation);
+		//return control.doGet();
+		
+		
+		byte[] decodedBytes = Base64.getDecoder().decode(operation);
+		operation = new String(decodedBytes);
+		
 		System.out.println (operation);
 		
-		if (fstNum.equals("Sriyal")){
-			 throw new SimpleException();
+		
+		if (operation.equals("*")){
+			//throw new SimpleException("Simple Exception");
+			throw new WrongInputFormatException("Wrong Input Exception");
 		}
-		return Response.status(Status.OK.getStatusCode()).entity(output).build();
+		return Response.status(Status.OK.getStatusCode()).entity(operation).build();
+		
+		
 	}
 	
 	/*
