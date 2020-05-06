@@ -1,6 +1,6 @@
-/home/sriyal/eclipse-workspace/JerseyCalcService/src/View/WrongInputFormatException.java
-/home/sriyal/eclipse-workspace/JerseyCalcService/src/View/View.java
-/home/sriyal/eclipse-workspace/JerseyCalcService/src/Model/Model.java
-/home/sriyal/eclipse-workspace/JerseyCalcService/src/Controller/Controller.java
-/home/sriyal/eclipse-workspace/JerseyCalcService/src/Model/WrongOperationException.java
-/home/sriyal/eclipse-workspace/JerseyCalcService/src/View/SimpleException.java
+/home/sriyal/eclipse-workspace/Java/JAX-RS/JAX-RS Calc/JerseyCalcService/src/Errors/SimpleException.java
+/home/sriyal/eclipse-workspace/Java/JAX-RS/JAX-RS Calc/JerseyCalcService/src/Model/Model.java
+/home/sriyal/eclipse-workspace/Java/JAX-RS/JAX-RS Calc/JerseyCalcService/src/Errors/WrongInputFormatException.java
+/home/sriyal/eclipse-workspace/Java/JAX-RS/JAX-RS Calc/JerseyCalcService/src/Errors/WrongOperationException.java
+/home/sriyal/eclipse-workspace/Java/JAX-RS/JAX-RS Calc/JerseyCalcService/src/Controller/Controller.java
+/home/sriyal/eclipse-workspace/Java/JAX-RS/JAX-RS Calc/JerseyCalcService/src/View/View.java

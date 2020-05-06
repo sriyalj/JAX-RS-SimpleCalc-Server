@@ -31,7 +31,7 @@ public class Controller {
 		this.JSONString = JSONString;
 	}
 	
-	public Response doGet () throws WrongInputFormatException, WrongOperationException, SimpleException {
+	public Response doGet () throws WrongInputFormatException, WrongOperationException {
 		
 		byte[] decodedBytes = Base64.getDecoder().decode(operation);
 		String decodedOperation = new String(decodedBytes);
@@ -102,9 +102,7 @@ public class Controller {
         	
         }
         else {        	
-    		//throw new WrongOperationException("Wrong Operation Requested. System Only Supports +, -, *, /, %");
-    		//throw new WrongOperationException("This is a Stupid Exception 123. System Only Supports +, -, *, /, %");
-        	throw new SimpleException("This is a Stupid Exception");
+    		throw new WrongOperationException("Wrong Operation Requested. System Only Supports +, -, *, /, %");
         }     
 	}
 	/*
